@@ -23,7 +23,7 @@ public class DatabaseHelper
     }
 
     // Method to establish a connection to the database
-    public void Connect()
+    public bool Connect()
     {
         if (connection == null)
         {
@@ -35,21 +35,27 @@ public class DatabaseHelper
         {
             connection.Open();
             Console.WriteLine("Connection opened successfully.");
+            return true;
         }
+
+        return false;
     }
 
     // Method to disconnect from the database
-    public void Disconnect()
+    public bool Disconnect()
     {
         if (connection != null && connection.State == ConnectionState.Open)
         {
             connection.Close();
             Console.WriteLine("Connection closed successfully.");
+            return true;
         }
+
+        return false;
     }
 
     // Method to execute a generic query
-    public DataTable ExecuteQuery(string query)
+    public DataTable? ExecuteQuery(string query)
     {
         DataTable dataTable = new DataTable();
 
@@ -71,6 +77,7 @@ public class DatabaseHelper
         catch (Exception ex)
         {
             Console.WriteLine($"An error occurred: {ex.Message}");
+            return null;
         }
 
         return dataTable;
